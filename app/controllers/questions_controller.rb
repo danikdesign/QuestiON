@@ -4,14 +4,14 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @questions = Question.find_by id: params[id]
+    @question = Question.find_by id: params[id]
   end
 
   def new
     @question = Question.new
   end
   def create
-    @question = Question.new(question_params)
+    @question = Question.new question_params
     if @question.save
       redirect_to questions_path
     else
@@ -21,7 +21,7 @@ class QuestionsController < ApplicationController
 
   def update
     @question = Question.find_by id: params[:id]
-    @question.update(question_params)
+    @question.update question_params
     redirect_to questions_path
   end
 
@@ -32,5 +32,7 @@ class QuestionsController < ApplicationController
   end
 
   private
-  params.require(:question).permit(:title, :body)
+  def question_params
+    params.require(:question).permit(:title, :body)
+  end
 end
