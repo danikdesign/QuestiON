@@ -4,7 +4,7 @@ class QuestionsController < ApplicationController
   end
 
   def show
-    @question = Question.find_by id: params[id]
+    @question = Question.find params[:id]
   end
 
   def new
@@ -19,6 +19,9 @@ class QuestionsController < ApplicationController
     end
   end
 
+  def edit
+    @question = Question.find_by id: params[:id]
+  end
   def update
     @question = Question.find_by id: params[:id]
     @question.update question_params
@@ -26,8 +29,9 @@ class QuestionsController < ApplicationController
   end
 
   def destroy
-    @question = Question.find_by id: params[:id]
+    @question = Question.find params[:id]
     @question.destroy
+
     redirect_to questions_path
   end
 
