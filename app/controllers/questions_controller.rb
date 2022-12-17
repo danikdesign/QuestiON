@@ -1,10 +1,10 @@
 class QuestionsController < ApplicationController
+  before_action :set_question, only: %i[show edit update destroy]
   def index
     @questions = Question.all
   end
 
   def show
-    @question = Question.find params[:id]
   end
 
   def new
@@ -20,16 +20,13 @@ class QuestionsController < ApplicationController
   end
 
   def edit
-    @question = Question.find_by id: params[:id]
   end
   def update
-    @question = Question.find_by id: params[:id]
     @question.update question_params
     redirect_to questions_path
   end
 
   def destroy
-    @question = Question.find params[:id]
     @question.destroy
 
     redirect_to questions_path
@@ -38,5 +35,9 @@ class QuestionsController < ApplicationController
   private
   def question_params
     params.require(:question).permit(:title, :body)
+  end
+
+  def set_question
+    @question = Question.find params[:id]
   end
 end
